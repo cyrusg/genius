@@ -19,14 +19,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler",   "~> 1.10"
-  spec.add_development_dependency "rake",      "~> 10.0"
-  spec.add_development_dependency "rspec",     "~> 3.3.0"
-  spec.add_development_dependency "rspec-its", "~> 1.1.0"
-  spec.add_development_dependency "mocha",     "~> 0.14.0"
-  spec.add_development_dependency "webmock",   "~> 1.11.0"
-  spec.add_development_dependency "vcr",       "~> 2.5.0"
-  spec.add_development_dependency "rubocop",   "~> 0.31.0"
+  spec.add_development_dependency "bundler",   "~> 2.3"
+  spec.add_development_dependency "rake",      "~> 13.0"
+  spec.add_development_dependency "rspec",     "~> 3.12.0"
+  spec.add_development_dependency "rspec-its", "~> 1.3.0"
+  spec.add_development_dependency "mocha",     "~> 2.0.4"
+  spec.add_development_dependency "webmock",   "~> 3.18.1"
+  spec.add_development_dependency "vcr",       "~> 6.2.0"
+  spec.add_development_dependency "rubocop",   "~> 1.54.0"
 
   spec.add_runtime_dependency     "httparty",  "~> 0.21.0"
 end

@@ -50,10 +50,13 @@ module Genius
 
     def self.handle_response(response)
       case response.code
+      when 200
       when 404 then raise NotFoundError
       when 401, 403 then raise AuthenticationError
-      else response
+      else raise Error, response['meta']['message']
       end
+
+      response
     end
 
     def self.default_params

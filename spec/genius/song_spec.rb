@@ -3,6 +3,21 @@ require 'spec_helper'
 describe Genius::Song do
   before { Genius.access_token = ENV['GENIUS_ACCESS_TOKEN'] }
 
+  context "live search" do
+    describe "simple search" do
+      let(:query) { "The Hills" }
+      subject(:results) { Genius::Song.search(query) }
+
+      its(:length) { is_expected.to eq(10) }
+
+      context "first result" do
+        subject { results.first }
+
+        its(:title) { is_expected.to eq("The Hills") }
+      end
+    end
+  end
+
   describe ".search", vcr: { cassette_name: "song-search-the-hills" } do
     let(:query) { "The Hills" }
     subject(:results) { Genius::Song.search(query) }
