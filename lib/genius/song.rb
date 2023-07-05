@@ -9,9 +9,20 @@ module Genius
       headers = default_headers.merge(headers)
       params = default_params.merge(q: query).merge(params)
 
-      response = http_get("/search", query: params, headers: headers)
+      params[:page] = 0
+      results = []
 
-      response["response"]["hits"].map do |hit|
+      # Collect all the JSON results first.
+      begin
+        params[:page] += 1
+        response = http_get("/search", query: params, headers: headers)
+        puts "page #{params[:page]} had #{response["response"]["hits"].size} results."
+        results << response["response"]["hits"]
+      end until response["response"]["hits"].empty?
+
+      results.flatten!
+
+      results.map do |hit|
         self.from_hash(hit["result"], text_format: params[:text_format])
       end
     end
