@@ -22,10 +22,8 @@ module Genius
         params[:page] += 1
         response = http_get("/search", query: params, headers: headers)
         puts "page #{params[:page]} had #{response["response"]["hits"].size} results."
-        results << response["response"]["hits"]
-      end until response["response"]["hits"].empty? || params[:page] >= max_pages 
-
-      results.flatten!
+        results += response["response"]["hits"]
+      end until response["response"]["hits"].empty? || params[:page] >= max_pages
 
       results.map do |hit|
         self.from_hash(hit["result"], text_format: params[:text_format])
