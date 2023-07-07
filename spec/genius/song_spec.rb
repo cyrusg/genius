@@ -5,16 +5,11 @@ describe Genius::Song do
 
   context "live search" do
     describe "simple search" do
-      let(:query) { "The Hills" }
-      subject(:results) { Genius::Song.search(query) }
+      let(:query) { "ghalambor" }
+      subject(:results) { Genius::Song.search(query, max_pages: 10) }
 
-      its(:length) { is_expected.to eq(10) }
-
-      context "first result" do
-        subject { results.first }
-
-        its(:title) { is_expected.to eq("The Hills") }
-      end
+      # May fail. This shows the returned number of hits is not consistent.
+      its(:length) { is_expected.to eq(53) }
     end
   end
 

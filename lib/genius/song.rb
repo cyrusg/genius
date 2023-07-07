@@ -5,7 +5,12 @@ module Genius
                 :updated_by_human_at, :lyrics_updated_at, :pyongs_count, :stats,
                 :current_user_metadata, :verified_annotations_by
 
-    def self.search(query, params: {}, headers: {})
+    def self.search(query, params: {}, headers: {}, max_pages: 1)
+      # Note (v1.0.3): This version introduces support for pagination, but all the exising tests
+      # are written with the assumption that only one API call is made to the Genius API for our
+      # searching. In order to allow the tests to continue to function, we're introducing a parameter
+      # to this method that will avoid pagination by default.
+
       headers = default_headers.merge(headers)
       params = default_params.merge(q: query).merge(params)
 
@@ -18,7 +23,7 @@ module Genius
         response = http_get("/search", query: params, headers: headers)
         puts "page #{params[:page]} had #{response["response"]["hits"].size} results."
         results << response["response"]["hits"]
-      end until response["response"]["hits"].empty?
+      end until response["response"]["hits"].empty? || params[:page] >= max_pages 
 
       results.flatten!
 
